@@ -1,0 +1,39 @@
+*** Repo Structure ***
+```
+└── 📁backend
+    └── 📁src
+        └── 📁config
+        └── 📁controllers
+        └── 📁middleware
+        └── 📁models
+        └── 📁routes
+        └── 📁utils
+        ├── app.js
+        ├── server.js
+    ├── .env
+    ├── .gitignore
+    ├── package-lock.json
+    └── package.json
+└── 📁frontend
+    └── 📁public
+    └── 📁src
+        └── 📁assets
+        └── 📁components
+        └── 📁context
+        └── 📁hooks
+        └── 📁pages
+        └── 📁services
+        └── 📁utils
+        ├── App.css
+        ├── App.jsx
+        ├── index.css
+        ├── main.jsx
+    ├── .gitignore
+    ├── eslint.config.js
+    ├── index.html
+    ├── package-lock.json
+    ├── package.json
+    ├── README.md
+    └── vite.config.js
+└── README.md
+```
