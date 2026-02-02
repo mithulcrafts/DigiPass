@@ -1,0 +1,13 @@
+input{
+    border: 2px solid #969696;
+    outline: none;
+    background-color: white;
+    width:20vw;
+    height: 5vh;
+    border-radius: 0.6vw;
+}
+input:focus-within{
+    transform: scale(1.05);
+    box-shadow: 0px 0px 15px skyblue;
+    border: 2px solid #7f9fe2;
+}
