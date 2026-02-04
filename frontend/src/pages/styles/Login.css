@@ -13,6 +13,7 @@ body {
   background-image: url("../../assets/Images/college_img.png");
   background-size: cover;
   background-position: center;
+  position: relative;
 }
 
 .login-page::before {
@@ -28,29 +29,43 @@ body {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  height: 50vh;
+  align-items: center;
   width: 340px;
-
-  background: rgba(255, 255, 255, 0.764);
-  padding: 2.5rem 2.5rem;
+  padding: 2.5rem;
   border-radius: 14px;
-
+  background: rgba(255, 255, 255, 0.764);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
   text-align: center;
 }
 
-.login-card h2 {
-  margin: 0;
+.logo-slot {
+  height: 50px;             
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.login-card .subtitle {
-  margin: 0.5rem 0 0;
-  color: #555;
+.title-slot {
+  height: 36px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-logo {
+  width: 50px;
+  height: auto;
+}
+
+.login-title {
+  height: 32px;
+  width: auto;
 }
 
 form {
-  margin-top: auto;
-  margin-bottom: auto;
+  margin-top: 1.5rem;
 
   display: flex;
   flex-direction: column;
@@ -59,5 +74,5 @@ form {
 }
 
 #LoginButton {
-  margin-top: 1 rem;
+  margin-top: 1rem;
 }

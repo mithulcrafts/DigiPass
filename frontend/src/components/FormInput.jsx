@@ -13,7 +13,7 @@ export default function FormInput({
           <label for={id}>{name}</label> <br />
         </>
       )}
-      <input type={type} name={name} id={id} placeholder={placeholder} autocomplete="off"></input>
+      <input type={type} name={name} id={id} placeholder={placeholder} autoComplete="off"></input>
     </>
   );
 }
