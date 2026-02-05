@@ -1,0 +1,43 @@
+.pass{
+    border:3px solid #dadadaa9;
+    width:30vw;   
+    height:25vh;
+    border-radius: 0.7vw;
+    box-shadow: 0 7px 10px rgba(0, 0, 0, 0.18);
+    display: grid;
+    grid-template-rows: repeat(4,4fr);
+    grid-template-columns: repeat(8,8fr);
+    transform: scale(0.8);
+}
+.pass:hover{
+    transform: scale(0.85);
+}
+.Purpose{
+    grid-row:1;
+    grid-column: 1/5;
+}
+.Status{
+    grid-row: 1;
+    grid-column: 7;
+}
+.Date{
+    display: inline-flex;
+    gap:vw;
+    grid-row:2;
+    grid-column: 1;
+    margin-top:-3vh;
+}
+.Destination{
+    display: inline-flex;
+    font-size: 1.7vw;
+    grid-row:4;
+    grid-column: 1/5;
+}
+.viewPassArrow{
+  all: unset;              
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  grid-row:4;
+  grid-column: 8;
+}

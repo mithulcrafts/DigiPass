@@ -1,4 +1,4 @@
-import "./FormInput.css";
+import "./styles/FormInput.css";
 export default function FormInput({
   type = "text",
   id,
