@@ -3,9 +3,9 @@ export default function Button({content}) //Take text as input which should be t
 {
     return (
         <>
-            <div id="Button">
+            <button id="Button" type="submit"> 
                 {content}
-            </div>
+            </button>
         </>
     )
 }

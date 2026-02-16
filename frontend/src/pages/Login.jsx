@@ -1,6 +1,7 @@
 import { useState } from "react"; //For doing animations
 import { motion } from "framer-motion"; //For using components for titles
 import "./styles/Login.css";
+import { loginUser } from "../services/authServices";
 import Button from "../components/Button";
 import FormInput from "../components/FormInput";
 import SplitText from "../components/SplitText";
@@ -9,8 +10,22 @@ import Logo from "../assets/Images/LogoRemovedbg.png";
 import Title from "../assets/Images/Title.png";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = async (e) => {
+    //e=>event
+    e.preventDefault(); //we are telling browser not to perform any default actions like reloading, so that data won't get reset
+    try {
+      const data = await loginUser(email, password);
+      localStorage.setItem("Token", data.accessToken); //Set jwt token in localstorage
+      alert("Login successful");
+    } catch (error) {
+      alert(error.response?.data?.message || "Login failed");
+    }
+  };
+
   //To do step by step animation
-  const [showLogo, setShowLogo] = useState(false); 
+  const [showLogo, setShowLogo] = useState(false);
   const [showTitle, setShowTitle] = useState(false);
   const [startBlur, setStartBlur] = useState(false);
 
@@ -72,15 +87,22 @@ export default function Login() {
           className="text-2xl font-medium text-gray-900 mb-8"
         />
 
-        <form>
-          <FormInput id="LoginID" name="LoginID" placeholder="ID" />
+        <form onSubmit={handleLogin}>
+          <FormInput
+            type="email"
+            id="loginID"
+            name="loginID"
+            placeholder="ID"
+            onChange={(e) => setEmail(e.target.value)} //We are saying whenever there is some event e and there is change, then we are asking to change it
+          />
           <FormInput
             type="password"
-            id="Password"
-            name="Password"
+            id="password"
+            name="password"
             placeholder="Password"
+            onChange={(e)=>setPassword(e.target.value)}
           />
-          <Button id="LoginButton" content="Login" />
+          <Button id="LoginButton" content="Login"/>
         </form>
       </div>
     </div>

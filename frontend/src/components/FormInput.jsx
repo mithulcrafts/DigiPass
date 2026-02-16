@@ -5,6 +5,7 @@ export default function FormInput({
   name,
   placeholder,
   label = false,
+  onChange
 }) {
   return (
     <>
@@ -13,7 +14,7 @@ export default function FormInput({
           <label for={id}>{name}</label> <br />
         </>
       )}
-      <input type={type} name={name} id={id} placeholder={placeholder} autoComplete="off"></input>
+      <input type={type} name={name} id={id} placeholder={placeholder} autoComplete="off" onChange={onChange}></input>
     </>
   );
 }
