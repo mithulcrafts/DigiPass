@@ -15,6 +15,12 @@ const studentSchema=mongoose.Schema({
     branch:{
         type:String,
         required:[true,'Branch not entered']
-    }
+    },
+    hostel:{
+        type:String,
+    },
+    roomNumber:{
+        type:Number,
+    },
 },{timestamps:true});
 module.exports=mongoose.model('Student',studentSchema);

@@ -1,16 +1,15 @@
 const bcrypt = require("bcrypt"); //For storing password securely
-const user = require("../models/user/userModel");
+const user = require("../../models/user/userModel");
 const asyncHandle = require("express-async-handler");
+const validateRequired=require("../../utils/validateRequired");
 
 //@desc createUser
 //@api /api/admin/createUser
 //@access private(Admin)
 const createUser = asyncHandle(async function (req, res) {
   const { name, email, password, phoneNumber, role } = req.body;
-  if (!name || !email || !password || !phoneNumber || !role) {
-    res.status(400);
-    throw new Error("All fields are mandatory");
-  }
+  validateRequired(["name","email","password","phoneNumber","role"],req.body,res);
+
   const userExists=await user.findOne({email});
   if(userExists)
   {
@@ -36,4 +35,5 @@ const createUser = asyncHandle(async function (req, res) {
     },
   });
 });
+
 module.exports = { createUser };
