@@ -9,7 +9,7 @@ const outpassSchema=mongoose.Schema({
     status:{
         type:String,
         enum:["Approved","Rejected","Pending","Expired"],
-        required:[true,"status field is empty"]
+        default:"pending"
     },
     eventTime:{ //Contains the details like approved/rejected time
         type:Date,
