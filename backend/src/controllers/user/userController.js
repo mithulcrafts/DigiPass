@@ -36,4 +36,12 @@ const createUser = asyncHandle(async function (req, res) {
   });
 });
 
-module.exports = { createUser };
+//@desc getUser
+//@api /api/user/me
+//@access private
+const getUser=asyncHandle(async function (req,res) {
+    const reqUser=await user.findById(req.user.user.id);
+    res.json(reqUser);
+})
+
+module.exports = { createUser, getUser };

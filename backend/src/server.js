@@ -7,6 +7,7 @@ const connectDB=require('./config/dbConnection');
 const errorHandler = require("./middleware/errorHandler");
 const authRoutes=require('./routes/authRoutes');
 const userRoutes=require('./routes/userRoutes');
+const outpassRoutes=require('./routes/outpassRoutes');
 
 app.use(cors({
   origin:process.env.FRONTEND_URL,
@@ -17,6 +18,7 @@ connectDB(); //To connect with Database
 
 app.use('/api/signIn',authRoutes);
 app.use('/api/users',userRoutes);
+app.use('/api/outpass',outpassRoutes);
 app.use(errorHandler); //Always place it "below" the route where you wanted to use
 app.listen(PORT, () => {
   console.log(`Server is running on the port ${PORT}`);

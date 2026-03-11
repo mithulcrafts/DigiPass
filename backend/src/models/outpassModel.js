@@ -40,4 +40,4 @@ const outpassSchema=mongoose.Schema({
         index:true
     }
 },{timestamps:true});
-module.exports=mongoose.module('Outpass',outpassSchema);
+module.exports=mongoose.model('Outpass',outpassSchema);
