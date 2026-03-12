@@ -3,7 +3,7 @@ import { motion } from "framer-motion"; //For using components for titles
 import "./styles/Login.css";
 import { loginUser } from "../services/authServices";
 import Button from "../components/Button";
-import FormInput from "../components/FormInput";
+import {FormInput} from "../components/FormInput";
 import SplitText from "../components/SplitText";
 import BlurText from "../components/BlurText";
 import Logo from "../assets/Images/LogoRemovedbg.png";
@@ -93,6 +93,7 @@ export default function Login() {
             id="loginID"
             name="loginID"
             placeholder="ID"
+            autoComplete="email"
             onChange={(e) => setEmail(e.target.value)} //We are saying whenever there is some event e and there is change, then we are asking to change it
           />
           <FormInput

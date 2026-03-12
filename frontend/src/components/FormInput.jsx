@@ -1,5 +1,5 @@
 import "./styles/FormInput.css";
-export default function FormInput({
+function FormInput({
   type = "text",
   id,
   name,
@@ -7,16 +7,40 @@ export default function FormInput({
   label = false,
   onChange,
   value,
-  readOnly=false
+  readOnly=false,
+  autoComplete="off"
 }) {
   return (
     <>
       {label && (
         <>
-          <label for={id}>{name}</label> <br />
+          <label htmlFor={id}>{name}</label> <br />
         </>
       )}
-      <input type={type} name={name} id={id} placeholder={placeholder} autoComplete="off" onChange={onChange} value={value} readOnly={readOnly}></input>
+      <input className="FormInput" type={type} name={name} id={id} placeholder={placeholder} autoComplete={autoComplete} onChange={onChange} value={value} readOnly={readOnly}></input>
     </>
   );
 }
+
+function ReadOnlyForm({
+  type = "text",
+  id,
+  name,
+  label = true,
+  onChange,
+  value,
+}) {
+  return (
+    <>
+      {label && (
+        <>
+          <label className="ReadOnlyFormLabel" htmlFor={id}>{name}</label> <br />
+        </>
+      )}
+      <input className="ReadOnlyForm" type={type} name={name} id={id} autoComplete="off" onChange={onChange} value={value} readOnly={true}></input>
+    </>
+  );
+}
+
+export {FormInput,ReadOnlyForm}
+
