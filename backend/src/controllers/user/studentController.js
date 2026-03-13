@@ -35,4 +35,16 @@ const createStudent = asyncHandle(async function (req, res) {
   });
 });
 
-module.exports = { createStudent };
+//@desc getStudent
+//@api /api/student/me
+//@access private
+const getStudent=asyncHandle(async function (req,res) {
+    const reqStudent=await student.findOne({userId:req.user.user.id});
+    if(!reqStudent)
+    {
+      throwError(404,"Student data not found",res);
+    }
+    res.json(reqStudent);
+})
+
+module.exports = { createStudent, getStudent };

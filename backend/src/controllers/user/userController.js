@@ -41,6 +41,10 @@ const createUser = asyncHandle(async function (req, res) {
 //@access private
 const getUser=asyncHandle(async function (req,res) {
     const reqUser=await user.findById(req.user.user.id);
+    if (!reqUser) {
+        res.status(404);
+        throw new Error("User data not found");
+    }
     res.json(reqUser);
 })
 
