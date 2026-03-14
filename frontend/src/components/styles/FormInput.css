@@ -12,6 +12,11 @@
     border: 2px solid #7f9fe2;
 }
 
+.FormLabel{
+    color:#404040;
+    margin-bottom: -4vh;
+    font-size: 1.1vw;
+}
 .ReadOnlyForm:read-only{
     border: 2px solid #969696;
     color:#535353;
@@ -24,5 +29,6 @@
 
 .ReadOnlyFormLabel{
     color:#404040;
+    margin-bottom: -4vh;
     font-size: 1.1vw;
 }

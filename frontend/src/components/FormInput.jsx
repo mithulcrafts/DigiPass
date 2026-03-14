@@ -14,7 +14,7 @@ function FormInput({
     <>
       {label && (
         <>
-          <label htmlFor={id}>{name}</label> <br />
+          <label className="FormLabel" htmlFor={id}>{name}</label> <br />
         </>
       )}
       <input className="FormInput" type={type} name={name} id={id} placeholder={placeholder} autoComplete={autoComplete} onChange={onChange} value={value} readOnly={readOnly}></input>
