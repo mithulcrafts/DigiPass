@@ -1,38 +1,39 @@
-.OutpassContainer {
-    width: min(88vw, 860px);
-    margin: 4vh auto;
-
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px 32px;
-
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 16px;
-    padding: 36px 40px;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+.OutpassContainer{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding-top:8vh;
 }
 
-.FormRow {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+.FormGrid{
+    width:70vw;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    column-gap:3vw;
+    row-gap:2vh;
+
+    background:#ffffff;
+    padding:3vh 3vw;
+    border-radius:12px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.08);
 }
 
-.ButtonRow {
-    grid-column: 1 / -1;
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 13vw;
-    padding-top: 20px;
-    margin-top: 4px;
-    border-top: 1px solid #f0f0f0;
+.FormRow{
+    display:flex;
+    flex-direction:column;
 }
 
-@media (max-width: 600px) {
-    .OutpassContainer {
-        width: 94vw;
-        grid-template-columns: 1fr;
-        padding: 24px 20px;
-    }
+.FormError{
+    grid-column:1 / span 2;
+    color:#d43b3b;
+    font-size:1.2vw;
+    text-align:center;
+}
+
+.ButtonRow{
+    grid-column:1 / span 2;
+    display:flex;
+    justify-content:center;
+    margin-top:1vh;
 }

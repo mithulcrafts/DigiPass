@@ -14,7 +14,7 @@
 
 .FormLabel{
     color:#404040;
-    margin-bottom: -4vh;
+    margin-bottom: -2vh;
     font-size: 1.1vw;
 }
 .ReadOnlyForm:read-only{
@@ -29,6 +29,6 @@
 
 .ReadOnlyFormLabel{
     color:#404040;
-    margin-bottom: -4vh;
+    margin-bottom: -2vh;
     font-size: 1.1vw;
 }

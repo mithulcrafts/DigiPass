@@ -6,10 +6,10 @@ const validateRequired=require("../utils/validateRequired");
 //@api /api/student/createOutpass
 //@access private(student)
 const createOutpass = asyncHandler(async function (req, res) {
-  const { requestedBy,purpose, location, fromTime, toTime } = req.body;
+  const { purpose, location, fromTime, toTime } = req.body;
   validateRequired(["purpose","location","fromTime","toTime"],req.body,res);
   const outPass=await outpass.create({
-    requestedBy,
+    requestedBy:req.user.user.id,
     purpose,
     location,
     fromTime,

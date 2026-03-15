@@ -32,7 +32,7 @@ const signin=asyncHandle(async function(req,res){
                 },
             },
             process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn:"15m"}
+            {expiresIn:"30m"}
         );
             //Sending access token as response
             res.status(200).json({accessToken});

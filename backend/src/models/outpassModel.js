@@ -9,7 +9,7 @@ const outpassSchema=mongoose.Schema({
     status:{
         type:String,
         enum:["Approved","Rejected","Pending","Expired"],
-        default:"pending"
+        default:"Pending"
     },
     eventTime:{ //Contains the details like approved/rejected time
         type:Date,
@@ -37,7 +37,7 @@ const outpassSchema=mongoose.Schema({
     qrToken:{
         type:String,
         unique:true,
-        index:true
+        sparse:true,
     }
 },{timestamps:true});
 module.exports=mongoose.model('Outpass',outpassSchema);
