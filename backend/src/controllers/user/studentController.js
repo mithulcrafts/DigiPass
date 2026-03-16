@@ -5,7 +5,7 @@ const validateRequired = require("../../utils/validateRequired");
 const throwError = require("../../utils/throwError");
 
 //@desc createStudent
-//@api /api/admin/createUser
+//@api /api/admin/createStudent
 //@access private(Admin)
 const createStudent = asyncHandle(async function (req, res) {
   const { userId, rollNumber, branch, hostel, roomNumber } = req.body;
@@ -37,7 +37,7 @@ const createStudent = asyncHandle(async function (req, res) {
 
 //@desc getStudent
 //@api /api/student/me
-//@access private
+//@access private(student)
 const getStudent=asyncHandle(async function (req,res) {
     const reqStudent=await student.findOne({userId:req.user.user.id});
     if(!reqStudent)
