@@ -38,6 +38,7 @@ const outpassSchema=mongoose.Schema({
         type:String,
         unique:true,
         sparse:true,
+        default:undefined
     }
 },{timestamps:true});
 module.exports=mongoose.model('Outpass',outpassSchema);

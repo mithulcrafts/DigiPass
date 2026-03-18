@@ -5,6 +5,7 @@ import getUser from "../../utils/getUser";
 import getStudent from "../../utils/getStudent";
 import Button from "../../components/Button";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 export default function Outpass() {
   const [user, setUser] = useState(null);
   const [student, setStudent] = useState(null);
@@ -13,6 +14,7 @@ export default function Outpass() {
   const [fromTime, setFromTime] = useState("");
   const [toTime, setToTime] = useState("");
   const [error, setError] = useState("");
+  const navigate=useNavigate();
   useEffect(() => {
     async function fetchUser() {
       const data = await getUser();
@@ -51,6 +53,7 @@ export default function Outpass() {
       );
       console.log(res.data);
       alert("Outpass created successfully");
+      navigate('/student/dashboard');
     } catch (err) {
       console.error(err);
       alert("Error creating outpass");

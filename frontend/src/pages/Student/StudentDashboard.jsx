@@ -1,20 +1,47 @@
-import {useState,useEffect} from 'react';
-import { StudentPassHistory } from "../../components/Cards/PassHistory"
-import getUser from "../../utils/getUser"
-export default function StudentDashboard()
-{
-    const [user,setUser]=useState(null);
-    useEffect(()=>{
-        async function fetchUser(){
-            const data=await getUser();
-            setUser(data);
-        }
-        fetchUser();
-    },[]);
-    return(
-        <>
-            <h1>Hello {user?user.name:"bro"} !!</h1>
-            <StudentPassHistory/>
-        </>
-    )
+import { useState, useEffect } from "react";
+import { StudentPassHistory } from "../../components/Cards/PassHistory";
+import getUser from "../../utils/getUser";
+import Button from "../../components/Button";
+import { useNavigate } from "react-router-dom";
+import getOutpasses from "../../utils/getOutpasses";
+export default function StudentDashboard() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [outpasses, setOutpasses] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getUser();
+      setUser(data);
+      const res = await getOutpasses("/outpass/getOutpasses");
+      setOutpasses(res.data.outpasses);
+    }
+    fetchData();
+  }, []);
+  return (
+    <>
+      <h1>Hello {user ? user.name : "bro"} !!</h1>
+      {outpasses.length > 0 ? (
+        outpasses.map((outpass) => {
+          return (
+            <StudentPassHistory
+              id={outpass._id}
+              Purpose={outpass.purpose}
+              Status={outpass.status}
+              FromDate={new Date(outpass.fromTime).toLocaleDateString()}
+              ToDate={new Date(outpass.toTime).toLocaleDateString()}
+              Destination={outpass.location}
+            />
+          );
+        })
+      ) : (
+        <p>No outpasses requested</p>
+      )}
+      <Button
+        content="Request outpass"
+        onClick={() => {
+          navigate("/student/Outpass");
+        }}
+      />
+    </>
+  );
 }
