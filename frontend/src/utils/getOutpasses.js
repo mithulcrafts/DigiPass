@@ -17,7 +17,6 @@ export default async function getOutpasses(
       },
     );
     console.log("Outpasses fetched successfully");
-    console.log(res);
     return res;
   } catch (err) {
     console.error(err);

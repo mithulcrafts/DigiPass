@@ -1,5 +1,6 @@
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
+import Unauthorized from "../pages/Unauthorized";
 import GuardRoutes from "./Guard.routes";
 import AdminRoutes from "./Admin.routes";
 import StudentRoutes from "./Student.routes";
@@ -14,6 +15,7 @@ export default function AppRoutes() {
         {WardenRoutes}
         {StudentRoutes}
         {GuardRoutes}
+        <Route path="/Unauthorized" element={<Unauthorized/>}/>
         <Route path="/*" element={<NotFound/>}/>
       </Routes>
     </>

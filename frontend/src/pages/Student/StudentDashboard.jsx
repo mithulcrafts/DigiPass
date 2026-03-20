@@ -24,6 +24,7 @@ export default function StudentDashboard() {
         outpasses.map((outpass) => {
           return (
             <StudentPassHistory
+              key={outpass._id}
               id={outpass._id}
               Purpose={outpass.purpose}
               Status={outpass.status}

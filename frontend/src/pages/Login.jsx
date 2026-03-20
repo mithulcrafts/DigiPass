@@ -1,9 +1,11 @@
-import { useState } from "react"; //For doing animations
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"; //For using components for titles
 import "./styles/Login.css";
 import { loginUser } from "../services/authServices";
+import getUser from "../utils/getUser";
 import Button from "../components/Button";
-import {FormInput} from "../components/FormInput";
+import { FormInput } from "../components/FormInput";
 import SplitText from "../components/SplitText";
 import BlurText from "../components/BlurText";
 import Logo from "../assets/Images/LogoRemovedbg.png";
@@ -12,6 +14,7 @@ import Title from "../assets/Images/Title.png";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const handleLogin = async (e) => {
     //e=>event
     e.preventDefault(); //we are telling browser not to perform any default actions like reloading, so that data won't get reset
@@ -19,6 +22,20 @@ export default function Login() {
       const data = await loginUser(email, password);
       localStorage.setItem("Token", data.accessToken); //Set jwt token in localstorage
       alert("Login successful");
+      const user = await getUser();
+      localStorage.setItem("role", user.role);
+      const role = user.role;
+      if (role == "student") {
+        navigate("/Student/Dashboard");
+      } else if (role == "admin") {
+        navigate("/Admin/Dashboard");
+      } else if (role == "warden") {
+        navigate("/Warden/Dashboard");
+      } else if (role == "guard") {
+        navigate("/Guard/Dashboard");
+      } else {
+        navigate("/Unauthorized");
+      }
     } catch (error) {
       alert(error.response?.data?.message || "Login failed");
     }
@@ -101,9 +118,9 @@ export default function Login() {
             id="password"
             name="password"
             placeholder="Password"
-            onChange={(e)=>setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
-          <Button id="LoginButton" content="Login"/>
+          <Button id="LoginButton" content="Login" />
         </form>
       </div>
     </div>
