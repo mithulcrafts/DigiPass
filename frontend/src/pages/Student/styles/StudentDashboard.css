@@ -1,0 +1,10 @@
+.welcomeMessage{
+    margin-left: 2vw;
+    margin-top: 0;
+}
+.passContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3 rem;
+  align-items: center; 
+}
