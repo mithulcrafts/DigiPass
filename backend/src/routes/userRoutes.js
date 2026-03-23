@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const {createUser,getUser}=require('../controllers/user/userController');
+const {createUser,getUser,getUserById}=require('../controllers/user/userController');
 const {createStudent}=require('../controllers/user/studentController');
 const {createWarden}=require('../controllers/user/wardenController');
 const {createGuard}=require('../controllers/user/securityController');
@@ -12,5 +12,5 @@ router.post('/createWarden',validateToken,authorizeRoles('admin'),createWarden);
 router.post('/createStudent',validateToken,authorizeRoles('admin'),createStudent);
 router.post('/createGuard',validateToken,authorizeRoles('admin'),createGuard);
 router.get('/me',validateToken,authorizeRoles("student","warden","guard","admin"),getUser);
-
+router.get('/:id',validateToken,authorizeRoles("student","warden","guard","admin"),getUserById);
 module.exports=router;

@@ -1,6 +1,12 @@
 import "../styles/PassHistory.css";
 import {ChevronHover,MapPinHover,CalendarIcon} from "../Animations.jsx";
+import {useNavigate} from 'react-router-dom';
 export function StudentPassHistory({id,Purpose="Purpose",Status="Pending",FromDate="FromDate",ToDate="ToDate",Destination="Dest"}) {
+  const navigate = useNavigate(); 
+
+  const handleNavigate = () => {
+    navigate(`/Outpass/${id}`);
+  };
   return (
     <>
       <div className="pass" id={id}>
@@ -9,7 +15,7 @@ export function StudentPassHistory({id,Purpose="Purpose",Status="Pending",FromDa
         <p className="Date"style={{gridColumn:5}}><CalendarIcon/>{FromDate}</p>
         <p className="Date" style={{gridColumn:7}}><CalendarIcon/>{ToDate}</p>
         <p className="Destination"><MapPinHover/>{Destination}</p>
-        <button className="viewPassArrow">
+        <button className="viewPassArrow" onClick={handleNavigate}>
           <ChevronHover size={20} />
         </button>
       </div>

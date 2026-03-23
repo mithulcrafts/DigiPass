@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { StudentPassHistory } from "../../components/Cards/PassHistory";
 import Header from "../../components/Header";
-import getUser from "../../utils/getUser";
+import {getUser} from "../../utils/getUser";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import getOutpasses from "../../utils/getOutpasses";

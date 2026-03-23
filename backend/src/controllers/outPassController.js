@@ -1,4 +1,4 @@
-const outpass = require("../models/outpassModel");
+const Outpass = require("../models/outpassModel");
 const asyncHandler = require("express-async-handler");
 const validateRequired = require("../utils/validateRequired");
 
@@ -13,12 +13,12 @@ const createOutpass = asyncHandler(async function (req, res) {
     res,
   );
   try {
-    const outPass = await outpass.create({
+    const outPass = await Outpass.create({
       requestedBy: req.user.user.id,
       purpose,
       location,
       fromTime,
-      toTime
+      toTime,
     });
     res.status(201).json({
       message: "Outpass Created successfully",
@@ -31,20 +31,42 @@ const createOutpass = asyncHandler(async function (req, res) {
 });
 
 //@desc getOutpasses
-//@api /api/student/getOutpasses
+//@api /api/outpass/getOutpasses
 //@access private(student)
-const getOutpasses = asyncHandler(async function(req,res){
-  try{
-    const outpasses=await outpass.find({requestedBy:req.user.user.id});
+const getOutpasses = asyncHandler(async function (req, res) {
+  try {
+    const outpasses = await Outpass.find({ requestedBy: req.user.user.id });
     res.status(200).json({
-      message:"Outpasses fetched successfully",
-      outpasses
-    })
-  }
-  catch(err)
-  {
+      message: "Outpasses fetched successfully",
+      outpasses,
+    });
+  } catch (err) {
     res.status(500);
     throw err;
   }
-})
-module.exports = { createOutpass,getOutpasses };
+});
+
+//@desc getOutpass
+//@api /api/student/getOutpass/:id
+//@access private(student), warden,admin,guard
+const getOutpass = asyncHandler(async (req, res) => {
+  try {
+    const outpass = await Outpass.findById(req.params.id);
+    if (!outpass) {
+      res.status(404);
+      throw new Error("Outpass not found");
+    }
+    if (
+      req.user.user.role === "student" &&
+      outpass.requestedBy.toString() !== req.user.user.id
+    ) {
+      res.status(403);
+      throw new Error("Access denied");
+    }
+    res.status(200).json(outpass);
+  } catch (err) {
+    res.status(500);
+    throw err;
+  }
+});
+module.exports = { createOutpass, getOutpasses, getOutpass };

@@ -1,6 +1,6 @@
 const asyncHandle = require("express-async-handler");
-const student = require("../../models/user/studentModel");
-const user = require("../../models/user/userModel");
+const Student = require("../../models/user/studentModel");
+const User = require("../../models/user/userModel");
 const validateRequired = require("../../utils/validateRequired");
 const throwError = require("../../utils/throwError");
 
@@ -11,18 +11,18 @@ const createStudent = asyncHandle(async function (req, res) {
   const { userId, rollNumber, branch, hostel, roomNumber } = req.body;
   validateRequired(["userId", "rollNumber", "branch"], req.body, res);
 
-  const userExists = await user.findById(userId);
+  const userExists = await User.findById(userId);
 
   if (!(userExists.role === "student")) {
     throwError(403, "Role of error is not student", res);
   }
 
-  const studentExists = await student.findOne({ userId });
+  const studentExists = await Student.findOne({ userId });
   if (studentExists) {
     throwError(400, "Student already exists", res);
   }
 
-  const newStudent = await student.create({
+  const newStudent = await Student.create({
     userId: userId,
     rollNumber: rollNumber,
     branch: branch,
@@ -38,13 +38,35 @@ const createStudent = asyncHandle(async function (req, res) {
 //@desc getStudent
 //@api /api/student/me
 //@access private(student)
-const getStudent=asyncHandle(async function (req,res) {
-    const reqStudent=await student.findOne({userId:req.user.user.id});
-    if(!reqStudent)
-    {
-      throwError(404,"Student data not found",res);
-    }
-    res.json(reqStudent);
-})
+const getStudent = asyncHandle(async function (req, res) {
+  const reqStudent = await Student.findOne({ userId: req.user.user.id });
+  if (!reqStudent) {
+    throwError(404, "Student data not found", res);
+  }
+  res.json(reqStudent);
+});
 
-module.exports = { createStudent, getStudent };
+//@desc getStudentById
+//@api /api/student/:id
+//@access private(student), warden,guard,admin
+const getStudentById = asyncHandle(async function (req, res) {
+  try {
+    const student = await Student.findOne({ userId: req.params.id });
+    if (!student) {
+      res.status(404);
+      throw new Error("User not found");
+    }
+    if (
+      req.user.user.role === "student" &&
+      req.params.id !== req.user.user.id
+    ) {
+      res.status(403);
+      throw new Error("Access denied");
+    }
+    res.status(200).json(student);
+  } catch (err) {
+    res.status(500);
+    throw err;
+  }
+});
+module.exports = { createStudent, getStudent, getStudentById };
