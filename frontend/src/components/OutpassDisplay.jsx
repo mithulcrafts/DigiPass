@@ -1,16 +1,19 @@
 import "./styles/OutpassDisplay.css";
 import { useState, useEffect } from "react";
+import html2pdf from "html2pdf.js";
 import getOutpasses from "../utils/getOutpasses.js";
 import { getUserById } from "../utils/getUser.js";
 import { getStudentById } from "../utils/getStudent.js";
 import { ReadOnlyForm } from "./FormInput";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
+import Button from "./Button.jsx";
 export default function OutpassDisplay() {
   const { id } = useParams();
   const [outpass, setOutpass] = useState({});
   const [user, setUser] = useState({});
   const [student, setStudent] = useState({});
+  const [downloading, setDownloading] = useState(false);
   async function fetchData() {
     try {
       const res = await getOutpasses(`/outpass/getOutpass/${id}`);
@@ -45,12 +48,22 @@ export default function OutpassDisplay() {
     hour: "2-digit",
     minute: "2-digit",
   });
+  const handleDownload = async(e) => {
+    e.preventDefault();
+    setDownloading(true);
+    await new Promise(r=>setTimeout(r,100));
+    const element = document.getElementById("outpass-card");
+    html2pdf().from(element).save("Outpass.pdf");
+    setDownloading(false);
+  };
   return (
     <>
-      <Header/>
-      <div className="OutpassContainer">
+      <Header />
+      <div className="OutpassContainer" id="outpass-card">
         <form className="FormGrid">
-          <div className="StatusBadge">{outpass?.status || "Pending"}</div>
+          <div className={`StatusBadge ${outpass?.status}`}>
+            {outpass?.status || "Pending"}
+          </div>
           <div className="FormRow">
             <ReadOnlyForm id="name" name="Name" value={user?.name || ""} />
           </div>
@@ -100,7 +113,6 @@ export default function OutpassDisplay() {
           </div>
 
           <div className="FormRowSpacer" />
-          {/* Ig the issue occured because previously id=location, we were taking location input, but currently we are showing it in read only, thats why */}
           <div className="FormRow">
             <ReadOnlyForm
               id="location"
@@ -124,6 +136,11 @@ export default function OutpassDisplay() {
           <div className="FormRow">
             <ReadOnlyForm id="toTime" name="To" value={tDate || ""} />
           </div>
+          {!downloading && (
+            <div className="ButtonRow">
+              <Button content="Download" onClick={handleDownload} type="button"/>
+            </div>
+          )}
         </form>
       </div>
     </>

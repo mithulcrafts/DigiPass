@@ -27,7 +27,6 @@
     position: absolute;
     top: 10px;
     right: 15px;
-    background-color: #f0f0f0;
 }
 .Date{
     display: inline-flex;
@@ -48,4 +47,24 @@
   cursor: pointer;
   grid-row:4;
   grid-column: 8;
+}
+
+.StatusBadge.Pending {
+  background-color: var(--status-pending-bg);
+  color: var(--status-pending-text);
+}
+
+.StatusBadge.Approved {
+  background-color: var(--status-approved-bg);
+  color: var(--status-approved-text);
+}
+
+.StatusBadge.Rejected {
+  background-color: var(--status-rejected-bg);
+  color: var(--status-rejected-text);
+}
+
+.StatusBadge.Expired {
+  background-color: var(--status-expired-bg);
+  color: var(--status-expired-text);
 }

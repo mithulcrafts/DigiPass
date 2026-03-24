@@ -35,6 +35,7 @@
 .ButtonRow{
     grid-column:1 / span 2;
     display:flex;
-    justify-content:center;
+    justify-content:flex-end;
+    padding-right: 2vw;
     margin-top:1vh;
 }

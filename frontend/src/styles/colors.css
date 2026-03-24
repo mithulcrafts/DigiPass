@@ -1,6 +1,17 @@
-:root{
-    --primary:#2563EB;
-    --secondary:#647488;
-    --text:#1E293B;
-    --background:#F1F5F9;
+:root {
+    --primary: #2563EB;
+    --secondary: #647488;
+    --text: #1E293B;
+    --background: #F1F5F9;
+    --status-pending-bg: #fff3cd;
+    --status-pending-text: #856404;
+
+    --status-approved-bg: #d4edda;
+    --status-approved-text: #155724;
+
+    --status-rejected-bg: #f8d7da;
+    --status-rejected-text: #721c24;
+
+    --status-expired-bg: #e2e3e5;
+    --status-expired-text: #383d41;
 }
