@@ -4,7 +4,7 @@ const asyncHandle = require("express-async-handler");
 const validateRequired = require("../../utils/validateRequired");
 
 //@desc createUser
-//@api /api/admin/createUser
+//@api /api/users/createUser
 //@access private(Admin)
 const createUser = asyncHandle(async function (req, res) {
   const { name, email, password, phoneNumber, role } = req.body;

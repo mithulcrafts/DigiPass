@@ -21,7 +21,7 @@ export default function StudentDashboard() {
   }, []);
   return (
     <>
-      <Header />
+      <Header/>
       <h1 className="welcomeMessage">Hello {user ? user.name : "bro"} !!</h1>
       <div className="passContainer">
         {outpasses.length > 0 ? (

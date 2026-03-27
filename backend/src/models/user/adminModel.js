@@ -7,9 +7,9 @@ const adminSchema=mongoose.Schema({
         unique:true,
         index:true
     },
-    staffId:{
+    S_ID:{
         type:String,
-        required:[true,"staffId not entered"],
+        required:[true,"S_ID not entered"],
         unique:true
     },
     designation:{

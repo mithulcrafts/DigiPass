@@ -11,9 +11,9 @@ const wardenSchema=mongoose.Schema({
         type:String,
         required:[true,"block not entered"]
     },
-    staffId:{
+    S_ID:{
         type:String,
-        required:[true,"staffId not entered"],
+        required:[true,"S_ID not entered"],
         unique:true
     },
     designation:{

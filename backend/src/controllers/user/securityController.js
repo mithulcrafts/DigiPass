@@ -5,13 +5,13 @@ const throwError=require("../../utils/throwError");
 const validateRequired=require("../../utils/validateRequired");
 
 //@desc createGuard
-//@api /api/admin/createUser
+//@api /api/users/createUser
 //@access private(Admin)
 const createGuard=asyncHandle(async function (req,res) {
     const {userId,S_ID,gate}=req.body;
     validateRequired(["userId","S_ID","gate"],req.body,res);
 
-    userExists=await user.findById(userId);
+    const userExists=await user.findById(userId);
     
     if(userExists.role!=="guard")
     {

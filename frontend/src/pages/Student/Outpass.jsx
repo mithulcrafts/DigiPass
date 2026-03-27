@@ -65,7 +65,7 @@ export default function Outpass() {
 
   return (
     <>
-      <Header />
+      <Header/>
       <div className="OutpassContainer">
         <form className="FormGrid" onSubmit={handleSubmit}>
           <div className="FormRow">

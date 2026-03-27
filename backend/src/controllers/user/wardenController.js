@@ -5,7 +5,7 @@ const validateRequired=require("../../utils/validateRequired");
 const throwError=require("../../utils/throwError");
 
 //@desc createWarden
-//@api /api/admin/createUser
+//@api /api/users/createUser
 //@access private(Admin)
 const createWarden = asyncHandle(async function(req,res) {
     const {userId,S_ID,designation,block} = req.body;
@@ -24,7 +24,7 @@ const createWarden = asyncHandle(async function(req,res) {
         throwError(400,"warden already exists",res);
     }
 
-    const newWarden = warden.create({
+    const newWarden = await warden.create({
         userId:userId,
         S_ID:S_ID,
         designation:designation,

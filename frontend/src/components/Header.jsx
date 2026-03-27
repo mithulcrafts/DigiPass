@@ -5,8 +5,9 @@ import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 export default function Header() {
   const navigate=useNavigate();
+  const role=localStorage.getItem("role");
   function redirect(){
-      navigate("/Student/Dashboard");
+      navigate(`/${role}/Dashboard`);
   }
   return (
     <>

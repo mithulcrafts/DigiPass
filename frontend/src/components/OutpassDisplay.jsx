@@ -8,7 +8,7 @@ import { ReadOnlyForm } from "./FormInput";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import Button from "./Button.jsx";
-export default function OutpassDisplay() {
+export default function OutpassDisplay(role) {
   const { id } = useParams();
   const [outpass, setOutpass] = useState({});
   const [user, setUser] = useState({});
@@ -58,7 +58,7 @@ export default function OutpassDisplay() {
   };
   return (
     <>
-      <Header />
+      <Header/>
       <div className="OutpassContainer" id="outpass-card">
         <form className="FormGrid">
           <div className={`StatusBadge ${outpass?.status}`}>

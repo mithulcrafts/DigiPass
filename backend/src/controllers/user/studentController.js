@@ -5,7 +5,7 @@ const validateRequired = require("../../utils/validateRequired");
 const throwError = require("../../utils/throwError");
 
 //@desc createStudent
-//@api /api/admin/createStudent
+//@api /api/users/createStudent
 //@access private(Admin)
 const createStudent = asyncHandle(async function (req, res) {
   const { userId, rollNumber, branch, hostel, roomNumber } = req.body;

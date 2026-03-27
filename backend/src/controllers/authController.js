@@ -4,7 +4,7 @@ const jwt=require('jsonwebtoken'); //For generating and sending JWT
 const asyncHandle = require('express-async-handler'); //For async handling
 
 //@desc userSignIn
-//@api /api/login
+//@api /api/signIn
 //@access public
 const signin=asyncHandle(async function(req,res){
     const {email,password}=req.body;
