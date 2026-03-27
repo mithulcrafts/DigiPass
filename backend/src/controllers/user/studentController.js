@@ -13,6 +13,10 @@ const createStudent = asyncHandle(async function (req, res) {
 
   const userExists = await User.findById(userId);
 
+  if(!userExists)
+  {
+    throwError(404,"User Not Found",res);
+  }
   if (!(userExists.role === "student")) {
     throwError(403, "Role of error is not student", res);
   }
