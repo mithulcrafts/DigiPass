@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 const validateRequired = require("../utils/validateRequired");
 
 //@desc createOutpass
-//@api /api/student/createOutpass
+//@api /api/outpass/createOutpass
 //@access private(student)
 const createOutpass = asyncHandler(async function (req, res) {
   const { purpose, location, fromTime, toTime } = req.body;
@@ -47,7 +47,7 @@ const getOutpasses = asyncHandler(async function (req, res) {
 });
 
 //@desc getOutpass
-//@api /api/student/getOutpass/:id
+//@api /api/outpass/getOutpass/:id
 //@access private(student), warden,admin,guard
 const getOutpass = asyncHandler(async (req, res) => {
   try {
@@ -69,4 +69,15 @@ const getOutpass = asyncHandler(async (req, res) => {
     throw err;
   }
 });
-module.exports = { createOutpass, getOutpasses, getOutpass };
+
+//@desc getAllOutpass
+//@api /api/outpass/getAllOutpasses
+//@access warden,admin
+const getAllOutpasses = asyncHandler(async (req, res) => {
+  const outPasses =await Outpass.find();
+  res.status(200).json({
+    message: "Outpasses fetched successfully",
+    outPasses,
+  });
+});
+module.exports = { createOutpass, getOutpasses, getOutpass, getAllOutpasses };

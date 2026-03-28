@@ -8,12 +8,13 @@ import { ReadOnlyForm } from "./FormInput";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import Button from "./Button.jsx";
-export default function OutpassDisplay(role) {
+export default function OutpassDisplay() {
   const { id } = useParams();
   const [outpass, setOutpass] = useState({});
   const [user, setUser] = useState({});
   const [student, setStudent] = useState({});
   const [downloading, setDownloading] = useState(false);
+  const role = localStorage.getItem("role");
   async function fetchData() {
     try {
       const res = await getOutpasses(`/outpass/getOutpass/${id}`);
@@ -48,17 +49,17 @@ export default function OutpassDisplay(role) {
     hour: "2-digit",
     minute: "2-digit",
   });
-  const handleDownload = async(e) => {
+  const handleDownload = async (e) => {
     e.preventDefault();
     setDownloading(true);
-    await new Promise(r=>setTimeout(r,100));
+    await new Promise((r) => setTimeout(r, 100));
     const element = document.getElementById("outpass-card");
     html2pdf().from(element).save("Outpass.pdf");
     setDownloading(false);
   };
   return (
     <>
-      <Header/>
+      <Header />
       <div className="OutpassContainer" id="outpass-card">
         <form className="FormGrid">
           <div className={`StatusBadge ${outpass?.status}`}>
@@ -138,7 +139,17 @@ export default function OutpassDisplay(role) {
           </div>
           {!downloading && (
             <div className="ButtonRow">
-              <Button content="Download" onClick={handleDownload} type="button"/>
+              {role === "warden" && (
+                <div className="outpassActionButtons">
+                  <button type="button" className="approveBtn">Approve</button>
+                  <button type="button" className="rejectBtn">Reject</button>
+                </div>
+              )}
+              <Button
+                content="Download"
+                onClick={handleDownload}
+                type="button"
+              />
             </div>
           )}
         </form>

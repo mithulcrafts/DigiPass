@@ -68,3 +68,62 @@
   background-color: var(--status-expired-bg);
   color: var(--status-expired-text);
 }
+
+.Wardenpass{
+    border:3px solid #dadadaa9;
+    width:32vw;   
+    height:34vh;
+    border-radius: 0.7vw;
+    box-shadow: 0 7px 10px rgba(0, 0, 0, 0.18);
+    display: grid;
+    grid-template-rows: repeat(4,4fr);
+    grid-template-columns: repeat(8,8fr);
+    transform: scale(0.8);
+}
+
+.WardenDestination {
+  display: inline-flex;
+  font-size: 1.7vw;
+  grid-row: 3;
+  grid-column: 1 / 6;
+}
+
+.actionButtons {
+  grid-row: 4;
+  grid-column: 1 / 6;
+  display: flex;
+  gap: 1rem;           
+  margin-left: 1vw;
+  align-items: center;
+}
+
+.actionButtons button {
+  grid-column: 1 / span 2;
+  border: none;
+  padding: 8px 18px;   
+  border-radius: 8px;
+  font-size: 0.9rem;   
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.approveBtn {
+  background-color: #28a745;
+  color: white;
+}
+
+.approveBtn:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.rejectBtn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.rejectBtn:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+}
