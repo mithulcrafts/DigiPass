@@ -1,6 +1,8 @@
 import "../styles/PassHistory.css";
+import {useState} from "react"
 import { ChevronHover, MapPinHover, CalendarIcon } from "../Animations.jsx";
 import { useNavigate } from "react-router-dom";
+import { handleAction } from "../../utils/handleAction.js";
 export function StudentPassHistory({
   id,
   Purpose = "Purpose",
@@ -9,7 +11,6 @@ export function StudentPassHistory({
   ToDate = "ToDate",
   Destination = "Dest",
 }) {
-  
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate(`/Outpass/${id}`);
@@ -50,11 +51,12 @@ export function WardenPassHistory({
   const handleNavigate = () => {
     navigate(`/Outpass/${id}`);
   };
+  const [status, setStatus] = useState(Status);
   return (
     <>
       <div className="Wardenpass" id={id}>
         <h3 className="Purpose">{Purpose}</h3>
-        <h4 className={`StatusBadge ${Status}`}>{Status}</h4>
+        <h4 className={`StatusBadge ${status}`}>{status}</h4>
         <p className="Date" style={{ gridColumn: 5 }}>
           <CalendarIcon />
           {FromDate}
@@ -68,8 +70,24 @@ export function WardenPassHistory({
           {Destination}
         </p>
         <div className="actionButtons">
-          <button className="approveBtn">Approve</button>
-          <button className="rejectBtn">Reject</button>
+          <button
+            className="approveBtn"
+            onClick={async () => {
+              await handleAction(id, "Approved");
+              setStatus("Approved")
+            }}
+            >
+            Approve
+          </button>
+          <button
+            className="rejectBtn"
+            onClick={async () => {
+              await handleAction(id, "Rejected");
+              setStatus("Rejected")
+            }}
+          >
+            Reject
+          </button>
         </div>
         <button className="viewPassArrow" onClick={handleNavigate}>
           <ChevronHover size={20} />

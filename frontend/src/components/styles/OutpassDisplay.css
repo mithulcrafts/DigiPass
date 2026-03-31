@@ -8,6 +8,7 @@
     font-size: 0.9vw;
     font-weight: 600;
 }
+
 .outpassActionButtons {
     grid-column: 1 / -1;
     display: flex;
@@ -16,13 +17,22 @@
     margin-top: 1vh;
     padding-right: 2vw;
 }
+
 .outpassActionButtons button {
-  grid-column: 1 / span 2;
-  border: none;
-  padding: 8px 18px;   
-  border-radius: 8px;
-  font-size: 0.9rem;   
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s ease;
+    grid-column: 1 / span 2;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.qrWrapper {
+  grid-column: 1 / -1;     
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  margin-top: 20px;
 }

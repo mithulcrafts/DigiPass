@@ -8,24 +8,30 @@ import { ReadOnlyForm } from "./FormInput";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import Button from "./Button.jsx";
+import { handleAction } from "../utils/handleAction.js";
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+import QRCode from "qrcode";
 export default function OutpassDisplay() {
   const { id } = useParams();
   const [outpass, setOutpass] = useState({});
   const [user, setUser] = useState({});
   const [student, setStudent] = useState({});
   const [downloading, setDownloading] = useState(false);
+  const [qr, setQr] = useState("");
   const role = localStorage.getItem("role");
   async function fetchData() {
     try {
       const res = await getOutpasses(`/outpass/getOutpass/${id}`);
       setOutpass(res.data);
-      console.log(res.data);
       const user = await getUserById(res?.data?.requestedBy);
       setUser(user);
-      console.log(user);
       const student = await getStudentById(res?.data.requestedBy);
       setStudent(student);
-      console.log(student);
+      const token = res?.data.qrToken;
+      if (token) {
+        const url = `${baseURL}/verify/${token}`;
+        QRCode.toDataURL(url).then(setQr);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -137,12 +143,39 @@ export default function OutpassDisplay() {
           <div className="FormRow">
             <ReadOnlyForm id="toTime" name="To" value={tDate || ""} />
           </div>
+          {outpass.status === "Approved" && (
+            <div className="qrWrapper">
+              {qr ? (
+                <img className="QRCode" src={qr} alt="QR Code" />
+              ) : (
+                <p>Generating QR...</p>
+              )}
+            </div>
+          )}
           {!downloading && (
             <div className="ButtonRow">
               {role === "warden" && (
                 <div className="outpassActionButtons">
-                  <button type="button" className="approveBtn">Approve</button>
-                  <button type="button" className="rejectBtn">Reject</button>
+                  <button
+                    type="button"
+                    className="approveBtn"
+                    onClick={async () => {
+                      const updated= await handleAction(id, "Approved");
+                      setOutpass(updated);
+                    }}
+                  >
+                    Approve
+                  </button>
+                  <button
+                    type="button"
+                    className="rejectBtn"
+                    onClick={async () => {
+                      const updated= await handleAction(id, "Rejected");
+                      setOutpass(updated);
+                    }}
+                  >
+                    Reject
+                  </button>
                 </div>
               )}
               <Button
