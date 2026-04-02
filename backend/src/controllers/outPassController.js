@@ -1,7 +1,7 @@
 const Outpass = require("../models/outpassModel");
 const asyncHandler = require("express-async-handler");
 const validateRequired = require("../utils/validateRequired");
-const generateToken=require("../utils/generateToken");
+const generateToken = require("../utils/generateToken");
 //@desc createOutpass
 //@api /api/outpass/createOutpass
 //@access private(student)
@@ -85,24 +85,23 @@ const getAllOutpasses = asyncHandler(async (req, res) => {
 //@api /api/outpass/:id/status
 //@access warden
 const updateOutpass = asyncHandler(async (req, res) => {
-  const {status}=req.body;
+  const { status } = req.body;
   const allowed = ["Approved", "Rejected"];
   if (!allowed.includes(status)) {
-  return res.status(400).json({ message: "Invalid status" });
-}
+    return res.status(400).json({ message: "Invalid status" });
+  }
   const outpassId = req.params.id;
   const outpass = await Outpass.findById(outpassId);
   if (!outpass) {
     res.status(404);
     throw new Error("Outpass not found");
   }
-  outpass.status=status;
-  outpass.eventTime=new Date();
-  outpass.eventBy=req.user.user.id;
-  if(outpass.status=="Approved")
-  {
-    const token=generateToken();
-    outpass.qrToken=token;
+  outpass.status = status;
+  outpass.eventTime = new Date();
+  outpass.eventBy = req.user.user.id;
+  if (outpass.status == "Approved") {
+    const token = generateToken();
+    outpass.qrToken = token;
   }
   await outpass.save();
   res.status(200).json({
@@ -111,24 +110,40 @@ const updateOutpass = asyncHandler(async (req, res) => {
   });
 });
 
-/*Still not finished*/
-
 //@desc verifyOutpass
-//@api /api/outpass/verify/:id/
-//@access private(student),warden,guard,admin
-const verifyOutpass=asyncHandler(async(req,res)=>{
-  const token=req.params.token;
-  if(!token)
-  {
-    return res.status(400).json({message:"Token not passed"});
+//@api /api/outpass/verify/:token/
+//@access public
+const verifyOutpass = asyncHandler(async (req, res) => {
+  const token = req.params.token;
+  if (!token) {
+    return res.status(400).json({ message: "Token not passed" });
   }
-  
-})
+  const outpass = await Outpass.findOne({ qrToken: token });
+  if (!outpass) {
+    return res.status(400).json({ message: "Invalid QR" });
+  }
+  if (outpass.status === "Expired") {
+    return res.status(400).json({ message: "Expired" });
+  }
+
+  if (outpass.status !== "Approved") {
+    return res.status(400).json({ message: "Not approved" });
+  }
+  if (new Date() > new Date(outpass.toTime)) {
+    outpass.status = "Expired";
+    await outpass.save();
+    return res.status(400).json({ message: "Expired" });
+  }
+  return res.status(200).json({
+    message: "Valid Outpass",
+    outpass,
+  });
+});
 module.exports = {
   createOutpass,
   getOutpasses,
   getOutpass,
   getAllOutpasses,
   updateOutpass,
-  verifyOutpass
+  verifyOutpass,
 };
