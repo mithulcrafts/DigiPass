@@ -17,9 +17,15 @@
 }
 .profileIcon{
     scale: 2;
-    margin-right: 3vw;
+    margin-right: 1vw; 
 }
-.profileIcon:hover{
-    scale: 2.2;
+.profile{
+    margin-right: 2vw;
+}
+.profile:hover{
+    scale: 1.2;
     cursor: pointer;
+}
+.arrow{
+    margin-left:-0.5vw;
 }
