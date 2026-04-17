@@ -1,0 +1,42 @@
+/* Remove unwanted spacing */
+body {
+  margin: 0;
+}
+
+/* Center the whole scanner section */
+.scannerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;   /* center vertically */
+}
+
+/* Reader box (main camera container) */
+#reader {
+  width: 350px;          /* fixed width */
+  height: 350px;         /* fixed height */
+  position: relative;
+  overflow: hidden;      /* prevents overflow */
+  border-radius: 12px;
+  background: black;     /* fallback */
+}
+
+#reader video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;     /*keeps it filled without stretching */
+}
+
+#reader canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+select {
+  margin-bottom: 15px;
+  padding: 5px 10px;
+}
+
+

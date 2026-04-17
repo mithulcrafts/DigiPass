@@ -1,5 +1,6 @@
 import Button from '../../components/Button';
 import {useNavigate} from 'react-router-dom';
+import Header from '../../components/Header';
 export default function AdminDashboard()
 {
     const navigate=useNavigate();
@@ -9,7 +10,7 @@ export default function AdminDashboard()
     }
     return(
         <>
-            AdminDashboard
+            <Header/>
             <Button content="Create New User" onClick={handleNavigate}></Button>
         </>
     )

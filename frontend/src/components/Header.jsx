@@ -38,6 +38,7 @@ export default function Header() {
               padding: "10px",
               width: "10vw",
               boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+              zIndex:2,
             }}
           >
             <div style={{ cursor: "pointer", padding: "8px" }}>Profile</div>

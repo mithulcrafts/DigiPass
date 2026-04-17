@@ -36,3 +36,59 @@
   align-items: center;
   margin-top: 20px;
 }
+
+.FormRowHorizontal {
+  grid-column: 1 / -1;   /* 🔥 make it span full grid */
+  display: flex;
+  gap: 16vw;
+}
+
+.verifyStatus {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Icon circle */
+.statusIcon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  font-size: 40px;
+  color: white;
+  animation: pop 0.4s ease;
+}
+
+/* Success */
+.success .statusIcon {
+  background: #2ecc71;
+}
+
+.success h2 {
+  color: #2ecc71;
+}
+
+/* Error */
+.error .statusIcon {
+  background: #e74c3c;
+}
+
+.error h2 {
+  color: #e74c3c;
+}
+
+/* Animation */
+@keyframes pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
