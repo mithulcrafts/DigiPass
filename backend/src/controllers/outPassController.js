@@ -2,6 +2,8 @@ const Outpass = require("../models/outpassModel");
 const asyncHandler = require("express-async-handler");
 const validateRequired = require("../utils/validateRequired");
 const generateToken = require("../utils/generateToken");
+const Log = require("../models/logModel");
+const Guard = require("../models/user/guardModel");
 //@desc createOutpass
 //@api /api/outpass/createOutpass
 //@access private(student)
@@ -112,7 +114,7 @@ const updateOutpass = asyncHandler(async (req, res) => {
 
 //@desc verifyOutpass
 //@api /api/outpass/verify/:token/
-//@access public
+//@access private(Guard)
 const verifyOutpass = asyncHandler(async (req, res) => {
   const token = req.params.token;
   if (!token) {
@@ -122,6 +124,20 @@ const verifyOutpass = asyncHandler(async (req, res) => {
   if (!outpass) {
     return res.status(400).json({ message: "Invalid QR" });
   }
+  let guard;
+  try{
+    guard = await Guard.findOne({ userId: req.user.user.id });
+  }catch(err)
+  {
+    throw err;
+  }
+  if (!guard) {
+    return res.status(403).json({ message: "Guard not found" });
+  }
+  if (outpass.status === "Completed") {
+    return res.status(400).json({ message: "Outpass already used" });
+  }
+
   if (outpass.status === "Expired") {
     return res.status(400).json({ message: "Expired" });
   }
@@ -129,13 +145,36 @@ const verifyOutpass = asyncHandler(async (req, res) => {
   if (outpass.status !== "Approved") {
     return res.status(400).json({ message: "Not approved" });
   }
+
   if (new Date() > new Date(outpass.toTime)) {
     outpass.status = "Expired";
     await outpass.save();
     return res.status(400).json({ message: "Expired" });
   }
+
+  const logCount = await Log.countDocuments({ outpassId: outpass._id });
+
+  let eventType;
+
+  if (logCount === 0) {
+    eventType = "EXIT";
+  } else if (logCount === 1) {
+    eventType = "ENTRY";
+    outpass.status = "Completed";
+  } else {
+    return res.status(400).json({ message: "Already used" });
+  }
+
+  await Log.create({
+    outpassId: outpass._id,
+    scannedBy: guard._id,
+    eventType,
+    gateNumber: guard.gate,
+  });
+
+  await outpass.save();
   return res.status(200).json({
-    message: "Valid Outpass",
+    message: `${eventType} recorded`,
     outpass,
   });
 });

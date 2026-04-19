@@ -8,7 +8,7 @@ const outpassSchema=mongoose.Schema({
     },
     status:{
         type:String,
-        enum:["Approved","Rejected","Pending","Expired"],
+        enum:["Approved","Rejected","Pending","Expired","Completed"],
         default:"Pending"
     },
     eventTime:{ //Contains the details like approved/rejected time
@@ -39,6 +39,6 @@ const outpassSchema=mongoose.Schema({
         unique:true,
         sparse:true,
         default:undefined
-    }
+    },
 },{timestamps:true});
 module.exports=mongoose.model('Outpass',outpassSchema);

@@ -9,5 +9,5 @@ router.get('/getOutpasses',validateToken,authorizeRoles("student"),getOutpasses)
 router.get('/getOutpass/:id',validateToken,authorizeRoles("student","warden","admin","guard"),getOutpass);
 router.get('/getAllOutpasses',validateToken,authorizeRoles("warden","admin"),getAllOutpasses);
 router.patch('/:id/status',validateToken,authorizeRoles("warden"),updateOutpass);
-router.get('/verify/:token',verifyOutpass);
+router.get('/verify/:token',validateToken,authorizeRoles("guard"),verifyOutpass);
 module.exports=router;

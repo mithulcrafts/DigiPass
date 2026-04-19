@@ -1,5 +1,5 @@
 import "./styles/OutpassDisplay.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import html2pdf from "html2pdf.js";
 import getOutpasses from "../utils/getOutpasses.js";
 import { getUserById } from "../utils/getUser.js";
@@ -22,7 +22,9 @@ export default function OutpassDisplay() {
   const [approved, setApproved] = useState(false);
   const [warden, setWarden] = useState({});
   const [eventTime, setEventTime] = useState({});
+  const [error, setError] = useState("");
   const role = localStorage.getItem("role");
+  const hasFetched = useRef(false);
   async function fetchData() {
     try {
       let res;
@@ -30,7 +32,10 @@ export default function OutpassDisplay() {
       if (role === "guard") {
         res = await getOutpasses(`/outpass/verify/${token}`);
         data = res.data.outpass;
-        if (res.data.message == "Valid Outpass") {
+        if (
+          res.data.message == "EXIT recorded" ||
+          res.data.message == "ENTRY recorded"
+        ) {
           setApproved(true);
           const wardenData = await getUserById(data?.eventBy);
           setWarden(wardenData);
@@ -65,9 +70,12 @@ export default function OutpassDisplay() {
       }
     } catch (err) {
       console.error(err);
+      setError(err.response?.data?.message || "Something went wrong");
     }
   }
   useEffect(() => {
+    if (hasFetched.current) return;
+    hasFetched.current = true;
     fetchData();
   }, [id, token]);
   const fromDate = new Date(outpass?.fromTime || "");
@@ -212,7 +220,7 @@ export default function OutpassDisplay() {
               ) : (
                 <div className="verifyStatus error">
                   <div className="statusIcon">✖</div>
-                  <h2>Invalid Outpass</h2>
+                  <h2>{error || "Invalid Outpass"}</h2>
                 </div>
               )}
             </>
