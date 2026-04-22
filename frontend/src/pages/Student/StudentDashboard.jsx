@@ -1,23 +1,22 @@
 import { useState, useEffect } from "react";
 import { StudentPassHistory } from "../../components/Cards/PassHistory";
 import Header from "../../components/Header";
-import {getUser} from "../../utils/getUser";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
-import getOutpasses from "../../utils/getOutpasses";
+import fetchData from "../../utils/fetchData";
 import './styles/StudentDashboard.css';
 export default function StudentDashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [outpasses, setOutpasses] = useState([]);
   useEffect(() => {
-    async function fetchData() {
-      const data = await getUser();
+    async function fetchInfo() {
+      const data = await fetchData("/users/me");
       setUser(data);
-      const res = await getOutpasses("/outpass/getOutpasses");
-      setOutpasses(res.data.outpasses);
+      const res = await fetchData("/outpass/getOutpasses");
+      setOutpasses(res.outpasses);
     }
-    fetchData();
+    fetchInfo();
   }, []);
   return (
     <>

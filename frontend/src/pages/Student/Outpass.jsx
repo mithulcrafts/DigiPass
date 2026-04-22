@@ -3,8 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ReadOnlyForm, FormInput } from "../../components/FormInput";
-import { getUser } from "../../utils/getUser";
-import { getStudent } from "../../utils/getStudent";
+import fetchData from "../../utils/fetchData";
 import Button from "../../components/Button";
 import Header from "../../components/Header";
 export default function Outpass() {
@@ -18,11 +17,11 @@ export default function Outpass() {
   const navigate = useNavigate();
   useEffect(() => {
     async function fetchUser() {
-      const data = await getUser();
+      const data = await fetchData("/users/me");
       setUser(data);
     }
     async function fetchStudent() {
-      const data = await getStudent();
+      const data = await fetchData(`/student/me`);
       setStudent(data);
     }
     fetchUser();

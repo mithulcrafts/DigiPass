@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"; //For using components for titles
 import "./styles/Login.css";
 import { loginUser } from "../services/authServices";
-import {getUser} from "../utils/getUser";
+import fetchData from "../utils/fetchData";
 import Button from "../components/Button";
 import { FormInput } from "../components/FormInput";
 import SplitText from "../components/SplitText";
@@ -22,7 +22,7 @@ export default function Login() {
       const data = await loginUser(email, password);
       localStorage.setItem("Token", data.accessToken); //Set jwt token in localstorage
       alert("Login successful");
-      const user = await getUser();
+      const user = await fetchData("/users/me");
       localStorage.setItem("role", user.role);
       const role = user.role;
       if (role == "student") {

@@ -1,9 +1,7 @@
 import "./styles/OutpassDisplay.css";
 import { useState, useEffect, useRef } from "react";
 import html2pdf from "html2pdf.js";
-import getOutpasses from "../utils/getOutpasses.js";
-import { getUserById } from "../utils/getUser.js";
-import { getStudentById } from "../utils/getStudent.js";
+import fetchData from "../utils/fetchData.js";
 import { ReadOnlyForm } from "./FormInput";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
@@ -25,19 +23,19 @@ export default function OutpassDisplay() {
   const [error, setError] = useState("");
   const role = localStorage.getItem("role");
   const hasFetched = useRef(false);
-  async function fetchData() {
+  async function fetchInfo() {
     try {
       let res;
       let data;
       if (role === "guard") {
-        res = await getOutpasses(`/outpass/verify/${token}`);
-        data = res.data.outpass;
+        res = await fetchData(`/outpass/verify/${token}`);
+        data = res.outpass;
         if (
           res.data.message == "EXIT recorded" ||
           res.data.message == "ENTRY recorded"
         ) {
           setApproved(true);
-          const wardenData = await getUserById(data?.eventBy);
+          const wardenData = await fetchData(`/users/${data?.eventBy}`);
           setWarden(wardenData);
           if (data?.eventTime) {
             const ET = new Date(data.eventTime).toLocaleString("en-IN", {
@@ -52,13 +50,13 @@ export default function OutpassDisplay() {
           }
         }
       } else {
-        res = await getOutpasses(`/outpass/getOutpass/${id}`);
-        data = res.data;
+        res = await fetchData(`/outpass/getOutpass/${id}`);
+        data = res;
       }
       setOutpass(data);
-      const user = await getUserById(data?.requestedBy);
+      const user = await fetchData(`/users/${data?.requestedBy}`);
       setUser(user);
-      const student = await getStudentById(data?.requestedBy);
+      const student = await fetchData(`/student/${data?.requestedBy}`);
       setStudent(student);
       if (role !== "guard") {
         const token = data?.qrToken;
@@ -76,7 +74,7 @@ export default function OutpassDisplay() {
   useEffect(() => {
     if (hasFetched.current) return;
     hasFetched.current = true;
-    fetchData();
+    fetchInfo();
   }, [id, token]);
   const fromDate = new Date(outpass?.fromTime || "");
   const toDate = new Date(outpass?.toTime || "");

@@ -1,19 +1,18 @@
 import { useState, useEffect } from "react";
-import { getUser } from "../../utils/getUser";
 import { WardenPassHistory } from "../../components/Cards/PassHistory";
 import Header from "../../components/Header";
-import getOutpasses from "../../utils/getOutpasses";
+import fetchData from "../../utils/fetchData";
 export default function WardenDashboard() {
   const [user, setUser] = useState(null);
   const [outpasses, setOutpasses] = useState([]);
   useEffect(() => {
-    async function fetchData() {
-      const data = await getUser();
+    async function fetchInfo() {
+      const data = await fetchData("/users/me");
       setUser(data);
-      const res = await getOutpasses("/outpass/getAllOutpasses");
-      setOutpasses(res.data.outPasses);
+      const res = await fetchData("/outpass/getAllOutpasses");
+      setOutpasses(res.outPasses);
     }
-    fetchData();
+    fetchInfo();
   }, []);
   return (
     <>
