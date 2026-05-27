@@ -125,10 +125,9 @@ const verifyOutpass = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Invalid QR" });
   }
   let guard;
-  try{
+  try {
     guard = await Guard.findOne({ userId: req.user.user.id });
-  }catch(err)
-  {
+  } catch (err) {
     throw err;
   }
   if (!guard) {
@@ -178,6 +177,42 @@ const verifyOutpass = asyncHandler(async (req, res) => {
     outpass,
   });
 });
+
+async function outpassStats() {
+  const total = await Outpass.countDocuments();
+  const approved = await Outpass.countDocuments({
+    status: "Approved",
+  });
+  const rejected = await Outpass.countDocuments({
+    status: "Rejected",
+  });
+  const pending = await Outpass.countDocuments({
+    status: "Pending",
+  });
+  const expired = await Outpass.countDocuments({
+    status: "Expired",
+  });
+  const completed = await Outpass.countDocuments({
+    status: "Completed",
+  });
+  return {
+    total,
+    approved,
+    rejected,
+    pending,
+    expired,
+    completed,
+  };
+}
+
+//@desc getOutpassStats
+//@api api/outpass/getStats
+//@access private(warden,admin)
+const getOutpassStats = asyncHandler(async (req, res) => {
+  const stats = await outpassStats();
+  return res.status(200).json(stats);
+});
+
 module.exports = {
   createOutpass,
   getOutpasses,
@@ -185,4 +220,6 @@ module.exports = {
   getAllOutpasses,
   updateOutpass,
   verifyOutpass,
+  getOutpassStats,
+  outpassStats,
 };

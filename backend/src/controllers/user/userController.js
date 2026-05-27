@@ -84,4 +84,40 @@ const getUserById = asyncHandle(async function (req, res) {
     throw err;
   }
 });
-module.exports = { createUser, getUser, getUserById };
+
+async function userStats() {
+  const userCount = await User.countDocuments();
+  const studentCount = await User.countDocuments({
+    role: "student",
+  });
+  const guardCount = await User.countDocuments({
+    role: "guard",
+  });
+  const wardenCount = await User.countDocuments({
+    role: "warden",
+  });
+  return {
+    userCount,
+    studentCount,
+    guardCount,
+    wardenCount,
+  };
+}
+
+//@desc getUserStats
+//@api /api/users/getStats
+//@access warden,admin
+const getUserStats = asyncHandle(async function (req, res) {
+  const { userCount, studentCount, guardCount, wardenCount } = await userStats();
+  if (req.user.user.role == "warden") {
+    res.status(200).json(studentCount);
+  } else if (req.user.user.role == "admin") {
+    res.status(200).json({
+      userCount,
+      studentCount,
+      guardCount,
+      wardenCount,
+    });
+  }
+});
+module.exports = { createUser, getUser, getUserById , userStats, getUserStats};

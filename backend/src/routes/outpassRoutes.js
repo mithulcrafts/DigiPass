@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const {createOutpass,getOutpasses,getOutpass,getAllOutpasses,updateOutpass,verifyOutpass}=require('../controllers/outPassController');
+const {createOutpass,getOutpasses,getOutpass,getAllOutpasses,updateOutpass,verifyOutpass,getOutpassStats}=require('../controllers/outPassController');
 const validateToken=require('../middleware/validateToken');
 const authorizeRoles=require('../middleware/authorizeRoles');
 
@@ -10,4 +10,5 @@ router.get('/getOutpass/:id',validateToken,authorizeRoles("student","warden","ad
 router.get('/getAllOutpasses',validateToken,authorizeRoles("warden","admin"),getAllOutpasses);
 router.patch('/:id/status',validateToken,authorizeRoles("warden"),updateOutpass);
 router.get('/verify/:token',validateToken,authorizeRoles("guard"),verifyOutpass);
+router.get('/getStats',validateToken,authorizeRoles("warden","admin"),getOutpassStats);
 module.exports=router;
