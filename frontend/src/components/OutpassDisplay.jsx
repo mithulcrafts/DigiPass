@@ -31,8 +31,8 @@ export default function OutpassDisplay() {
         res = await fetchData(`/outpass/verify/${token}`);
         data = res.outpass;
         if (
-          res.data.message == "EXIT recorded" ||
-          res.data.message == "ENTRY recorded"
+          res.message == "EXIT recorded" ||
+          res.message == "ENTRY recorded"
         ) {
           setApproved(true);
           const wardenData = await fetchData(`/users/${data?.eventBy}`);
